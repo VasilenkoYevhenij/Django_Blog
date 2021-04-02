@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        <div>
+        <small class="text-muted"> <i class="fas fa-eye"></i> {{ object.post_views }}</small>
+        <small class="text-muted"> <i class="fas fa-comment-alt"></i> {{ post.comments.count }}</small>
+        {% if object.author == user %}
+        </div>
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ object.title }}</h2>
+      <p class="article-content">{{ object.content }}</p>
+      </div>
+  </article>
+<div>
+<h2 class="article-title">Comments</h2>
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-comment' object.id %}">Add Your Comment</a>
+  {% for comment in post.comments.all %}
+  <li class="list-group-item">
+    <div class="comments" style="padding: 10px;">
+      <span class="text-muted font-weight-normal">
+        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ comment.author }}</a>
+          {{ comment.date_posted }}
+        </span>
+        <div>
+          <p></p>
+          <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+            {{ comment.content | linebreaks }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="col-md-4">
+	      <div class="content-section">
+	          <ul class="list-group">
+	          	{% for pop_article in popular_posts %}
+	            	<li class="list-group-item">
+	              		<a href="{% url 'post-detail' pop_article.id %}">{{ pop_article.title }}</a>
+	              	</li>
+	          	{% endfor %}
+	          </ul>
+	      </div>
+ </div>
+
+{% endblock content %}
